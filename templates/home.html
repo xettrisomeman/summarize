@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Summarize</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    {% if error %}
+    <div class="notification">
+  <button class="delete"></button>
+  {{error}}
+</div>
+<style>
+document.addEventListener('DOMContentLoaded', () => {
+  (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+    const $notification = $delete.parentNode;
+
+    $delete.addEventListener('click', () => {
+      $notification.parentNode.removeChild($notification);
+    });
+  });
+});
+</style>
+    {% endif %}
+    {% if not text %}
+<form class="has-text-centered" style="display: flex; flex-wrap: wrap; align-items: center;" method="POST" action="/">
+  <div class="file has-name" style="background-color: #3273dc; color: #fff; padding: 20px; border-radius: 5px; flex-basis: 100%;">
+    <label class="file-label">
+      <input class="file-input" type="file" name="paper" onchange="displayFileName(this)">
+      <span class="file-cta">
+        <span class="file-icon">
+          <i class="fas fa-upload"></i>
+        </span>
+        <span class="file-label">
+          Choose a file…
+        </span>
+      </span>
+      <span class="file-name has-text-centered" id="file-name"></span>
+    </label>
+  </div>
+  <div class="control" style="margin-top: 20px; flex-basis: 100%;">
+    <input type="submit" class="button is-link" value="Upload" id="submit-button" disabled>
+  </div>
+  </div>
+</form>
+
+<script>
+  function displayFileName(input) {
+    var fileName = input.files[0].name;
+    document.getElementById("file-name").innerHTML = fileName;
+    document.getElementById("submit-button").disabled = false;
+  }
+</script>
+{% else %}
+ <div class="file has-name box" style="background-color: #3273dc; color: #fff; padding: 20px; border-radius: 5px; flex-basis: 100%;">  
+   <div class="box" style="background-color: white;">
+   <p style="font-family: Arial; font-size: 16px; line-height: 1.5; text-align: justify;"> {{text}}</p>
+   </div>
+</div>
+<a class="button is-focused" href="/">Go Back</a>
+{%endif %}
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <p>
+      <a href="https://github.com/xettrisomeman/summarize"><i class="fa fa-github" style="font-size: 40px;" aria-hidden="true"></i></a> 
+      </p>
+      <strong>Summarize</strong> by <a href="https://github.com/xetterisomeman">SomeMan</a>. The source code is licensed
+      <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+      </p>
+  </div>
+</footer>
+
+  </body>
+</html>
