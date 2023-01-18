@@ -36,8 +36,10 @@ def home(request: Request):
 
 
 @app.post("/", response_class=HTMLResponse)
-def upload_file(request: Request, paper=Form()):
-    texts = return_summarized_texts(paper)
+def upload_file(request: Request, paper: bytes = Form()):
+    with open("file.pdf", "wb") as f:
+        f.write(paper)
+    texts = return_summarized_texts("file.pdf")
     if "Error" in texts:
         return templates.TemplateResponse(
             "home.html", context={"request": request, "error": texts}
