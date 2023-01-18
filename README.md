@@ -1,13 +1,3 @@
-<p align="center">
-<img src="static/images/logo-no-background.svg" alt="drawing" width="150" height="50"/> 
-</p>
-<p align="center">
-<em>Natural Language Code For Film</em>
-</p>
-<p align="center">
-<strong>Find movies in seconds</strong>
-</p>
-
 > Part of the project [AI21 Labs Hackathon](https://lablab.ai/event/ai21-labs-hackathon)
 
 
