@@ -18,6 +18,8 @@ class FileTooLargeError(Exception):
 
 
 def read_pdf(filename):
+    with open(filename, "wb") as f:
+        f.write(filename)
     reader = PdfReader(filename)
     file_size = os.path.getsize(filename) / 1000
     if file_size > 1000:
