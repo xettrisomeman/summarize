@@ -18,7 +18,7 @@ class FileTooLargeError(Exception):
 
 
 def read_pdf(filename):
-    reader = PdfReader(filename)
+    reader = PdfReader(open(filename, "rb"))
     file_size = os.path.getsize(filename) / 1000
     if file_size > 1000:
         raise FileTooLargeError("Error: File size should be less than 1MB")

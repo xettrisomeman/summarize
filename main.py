@@ -4,7 +4,7 @@ import uvicorn
 
 import regex as re
 from fastapi.responses import HTMLResponse
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.requests import Request
 from fastapi.templating import Jinja2Templates
 
@@ -38,11 +38,11 @@ def home(request: Request):
 
 
 @app.post("/", response_class=HTMLResponse)
-def upload_file(request: Request, file: UploadFile = File()):
-    tmp_path = os.path.join("/tmp", "file.pdf")
-    with open(tmp_path, "wb") as f:
-        f.write(file.file.read())
-    texts = return_summarized_texts("/tmp/file.pdf")
+def upload_file(request: Request, pdf_file: UploadFile = File()):
+    with open("file.pdf", "wb") as f:
+        content = pdf_file.file.read()
+        f.write(content)
+    texts = return_summarized_texts("file.pdf")
     if "Error" in texts:
         return templates.TemplateResponse(
             "home.html", context={"request": request, "error": texts}
