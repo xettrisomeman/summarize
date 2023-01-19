@@ -1,11 +1,8 @@
 import os
-import sys
 import requests
 import regex as re
 from PyPDF2 import PdfReader
 
-import ai21
-from langchain import LLMChain, PromptTemplate
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -20,13 +17,13 @@ class FileTooLargeError(Exception):
 def read_pdf(filename):
     reader = PdfReader(open(filename, "rb"))
     file_size = os.path.getsize(filename) / 1000
-    if file_size > 1000:
-        raise FileTooLargeError("Error: File size should be less than 1MB")
+    if file_size > 500:
+        raise FileTooLargeError("Error: File size should be less than 500KB")
     else:
         PAGES_LEN = len(reader.pages)
-        output = ""
-        for index in range(0, PAGES_LEN):
-            output += reader.pages[index].extract_text()
+        output = "".join(
+            [reader.pages[index].extract_text() for index in range(0, PAGES_LEN)]
+        )
         doc_search = re.search(
             r"Introduction((.*)(\d)references|(.*)(\d). Bibliographical References|(.*)References)",
             output,
