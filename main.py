@@ -39,10 +39,10 @@ def home(request: Request):
 
 @app.post("/", response_class=HTMLResponse)
 def upload_file(request: Request, pdf_file: UploadFile = File()):
-    with open("file.pdf", "wb") as f:
+    with open("/tmp/file.pdf", "wb") as f:
         content = pdf_file.file.read()
         f.write(content)
-    texts = return_summarized_texts("file.pdf")
+    texts = return_summarized_texts("/tmp/file.pdf")
     if "Error" in texts:
         return templates.TemplateResponse(
             "home.html", context={"request": request, "error": texts}
