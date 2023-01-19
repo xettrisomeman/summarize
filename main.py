@@ -1,5 +1,7 @@
 import uvicorn
 
+import shutil
+
 import regex as re
 from fastapi.responses import HTMLResponse
 from fastapi import FastAPI, Form
@@ -11,6 +13,10 @@ from utils import split_text, call_ai21, read_pdf, FileTooLargeError
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
+
+
+def copy_pdf(filename):
+    shutil.copy2(filename, "/tmp/file.pdf")
 
 
 def return_summarized_texts(filename):
@@ -37,8 +43,7 @@ def home(request: Request):
 
 @app.post("/", response_class=HTMLResponse)
 def upload_file(request: Request, paper: bytes = Form()):
-    with open("/tmp/file.pdf", "wb") as f:
-        f.write(paper)
+    copy_pdf(paper)
     texts = return_summarized_texts("/tmp/file.pdf")
     if "Error" in texts:
         return templates.TemplateResponse(
